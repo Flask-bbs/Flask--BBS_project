@@ -1,0 +1,59 @@
+<!--  继承模板文件cms/cms_base.html  简化代码 -->
+{% extends 'cms/cms_base.html' %}
+
+<!-- 页面标题 -->
+{% block title %}
+    修改密码
+{% endblock %}
+
+<!--  标题  -->
+{% block page_title %}
+    {{self.title()}}
+{% endblock %}
+
+<!--  写修改密码的form表单格式  -->
+{% block head %}
+<style>
+    .form-container{
+        width:300px;
+    }
+</style>
+
+<!--  关联本地的resetpwd.js样式 -->
+<script src="{{ url_for('static', filename='cms/js/resetpwd.js') }}"></script>
+
+{% endblock %}
+
+<!-- 只有form表单信息不一样 -->
+{% block content %}
+    <form action="" method="post">
+        <!--   这里的csrf验证信息在cms_base.html的头文件中已经添加了     -->
+        <div class="form-container">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">旧密码</span>
+                    <input type="password" class="form-control" name="oldpwd" placeholder="请输入旧密码">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">新密码</span>
+                    <input type="password" class="form-control" name="newpwd" placeholder="请输入新密码">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">确认新密码</span>
+                    <input type="password" class="form-control" name="newpwd2" placeholder="请输入确认密码">
+                </div>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" id="submit">立即保存</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+
+
+

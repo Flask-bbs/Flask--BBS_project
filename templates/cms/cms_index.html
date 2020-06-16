@@ -1,0 +1,20 @@
+<!--  继承模板文件cms/cms_base.html  简化代码 -->
+{% extends 'cms/cms_base.html' %}
+
+<!-- 页面标题 -->
+{% block title %}
+    CMS管理系统
+{% endblock %}
+
+<!--  标题  -->
+{% block page_title %}
+    欢迎来到CMS管理系统
+{% endblock %}
+
+<!-- 内容 -->
+{% block content %}
+    <!-- 引用相同的内容  -->
+    {{ self.page_title() }}
+{% endblock %}
+
+

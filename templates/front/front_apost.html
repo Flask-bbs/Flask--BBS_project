@@ -1,0 +1,72 @@
+<!-- 前台帖子信息渲染页面文件：templates/front/front_apost.html  -->
+{% extends 'front/front_base.html' %}
+
+{% block title %}
+       发布帖子
+{% endblock %}
+
+<!--补充内容-->
+{% block head %}
+    <!--  富文本编辑器关联样式  -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='editormd/css/editormd.css') }}"/>
+    <script src="{{ url_for('static',filename='front/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='editormd/editormd.min.js') }}"></script>
+    <!-- 发布帖子页面关联样式  -->
+    <script src="{{ url_for('static',filename='front/js/front_apost.js') }}"></script>
+
+{% endblock %}
+
+<!-- 模板继承 -->
+{% block main_content %}
+    <div class="main-container">
+    <form action="" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon">标题</span>
+            <input type="text" class="form-control" name="title">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon">板块</span>
+            <!--     name="board_id"是帖子的Form表单信息中的字段       -->
+            <select name="board_id" class="form-control">
+
+                {% for board in boards %}
+                    <option value="{{ board.id }}">{{ board.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+        <!--  绑定的id为editor  -->
+     <div id="editor" class="form-group">
+         <!--     name="content"是帖子的Form表单信息中的字段       -->
+        <textarea name="content" id="TextContent" ></textarea>
+     </div>
+    <div class="form-group">
+        <button class="btn btn-danger" id="submit-btn">发布帖子</button>
+    </div>
+</form>
+
+<script type="text/javascript">
+    var testEditor;
+    $(function () {
+        testEditor = editormd("editor", {                                             // 绑定的id为editor
+            width: "100%",
+            height: 640,
+            syncScrolling: "single",
+            path: "{{ url_for('static',filename='editormd/lib/') }}",                 // 存储路径
+            // 上传图片
+            imageUpload : true,
+            imageFormats : [ "jpg", "jpeg", "gif", "png", "bmp", "webp" ],
+            // 上传图片时指定调用后台的视图函数
+            imageUploadURL : "",
+
+        });
+    });
+</script>
+</div>
+
+{% endblock %}

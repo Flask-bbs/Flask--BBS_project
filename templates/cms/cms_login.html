@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+<!--    <link rel="icon" href="../../favicon.ico">-->
+
+    <title>CMS后台登录界面</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- Custom styles for this template -->
+<!--    <link href="signin.css" rel="stylesheet">-->
+
+      <!--   这里引用自己的css模板文件 模板中引用静态资源文件使用url_for,路径filename='cms/css/signin.css')需要相对路径中的绝对路径-->
+    <link href="{{ url_for('static', filename='cms/css/signin.css') }}" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <div class="container">
+
+<!--    添加登录方法method="post"    -->
+      <form class="form-signin" method="post">
+<!--    CSRF保护验证  type="hidden"页面隐藏这个信息，只用于验证保护    方法调用csrf_token()   -->
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <h2 class="form-signin-heading">请登录</h2>
+        <label for="inputEmail" class="sr-only">邮箱</label>
+<!--    表单提交根据name="email"来接收后端数据      -->
+        <input type="email" id="inputEmail" name="email" class="form-control" placeholder="邮箱地址" required autofocus>
+        <label for="inputPassword" class="sr-only">密码</label>
+<!--    表单提交根据name="password"来接收后端数据      -->
+        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="填写密码" required>
+        <div class="checkbox">
+          <label>
+              <!--    表单提交根据name="remember"来接收后端数据      -->
+            <input type="checkbox" value="remember-me" name="remember"> 记住我
+          </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">立即登录</button>
+      </form>
+
+<!--   views.py中的表单验证输出的错误参数message进行渲染到前端界面   先判断message是否有信息，没有就不进行渲染  -->
+        {% if message %}
+            <!--      style="text-align:center" class="text-danger" 居中、红色字体样式      -->
+            <p style="text-align:center" class="text-danger"> {{ message }}</p>
+        {% endif %}
+
+    </div> <!-- /container -->
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

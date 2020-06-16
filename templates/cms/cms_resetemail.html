@@ -1,0 +1,47 @@
+<!--  继承模板文件cms/cms_base.html  简化代码 -->
+{% extends 'cms/cms_base.html' %}
+
+<!-- 页面标题 -->
+{% block title %}
+    修改邮箱
+{% endblock %}
+
+<!--  标题  -->
+{% block page_title %}
+    {{self.title()}}
+{% endblock %}
+
+<!--  写修改密码的form表单格式  -->
+{% block head %}
+<style>
+    .form-container{
+        width:300px;
+    }
+</style>
+
+<!--  关联本地的resetemail.js样式 -->
+<script src="{{ url_for('static', filename='cms/js/resetemail.js') }}"></script>
+
+{% endblock %}
+
+<!-- 只有form表单信息不一样 -->
+{% block content %}
+    <form action="" method="post">
+        <div class="form-container">
+            <div class="form-group">
+                <div class="input-group">
+                    <!--        name="email"验证的表单名称要和这个相同            -->
+                    <input type="email" class="form-control" name="email" placeholder="新邮箱">
+                    <span class="input-group-addon" id="captcha-btn" style="cursor:pointer;">获取验证码</span>
+                </div>
+            </div>
+            <div class="form-group">
+                    <!--      name="captcha"验证的表单名称要和这个相同           -->
+                <input type="text" class="form-control" name="captcha" placeholder="邮箱验证码">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" id="submit">立即修改</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

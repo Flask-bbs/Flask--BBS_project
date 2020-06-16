@@ -1,0 +1,59 @@
+<!--  继承模板文件cms/cms_base.html  简化代码 -->
+{% extends 'cms/cms_base.html' %}
+
+<!-- 页面标题 -->
+{% block title %}
+    个人信息
+{% endblock %}
+
+<!--  标题  -->
+{% block page_title %}
+    {{self.title()}}
+{% endblock %}
+
+
+{% block content %}
+    <!--  将全局变量的对象在这个block模块中命名为user  -->
+    {% set user = g.cms_user %}
+    <table class="table table-bordered">
+            <tr>
+                <td>用户名：</td>
+                <!--  调用全局变量对象的username字段属性  user替代g.cms_user       -->
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <td>邮箱：</td>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <td>角色：</td>
+                <td>
+                    <!--      循环 全局变量对象的外键roles      一个用户多个角色       -->
+                    {% for role in user.roles %}
+                        {{ role.name }}
+                        <!--  判断是否在最后的描述信息后加，           -->
+                        {% if not loop.last %}
+                            ,
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>权限：</td>
+                <td>
+                    <!--     循环 全局变量对象的外键roles        -->
+                    {% for role in user.roles %}
+                        {{ role.desc }}
+
+                        {% if not loop.last %}
+                            ,
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>加入时间：</td>
+                <td>{{ user.join_time }}</td>
+            </tr>
+    </table>
+{% endblock %}

@@ -1,0 +1,14 @@
+<!-- 前台测试页面文件：templates/front/front_test.html  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Referrer跳转测试</title>
+</head>
+<body>
+<!--    关联登录注册的url，front.signin是类视图中路由决定     -->
+<a href="{{ url_for('front.signup') }}">Referrer注册跳转测试</a>
+<a href="{{ url_for('front.signin') }}">Referrer登录跳转测试</a>
+
+</body>
+</html>

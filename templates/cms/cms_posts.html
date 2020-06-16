@@ -1,0 +1,58 @@
+<!--  后台管理帖子页面：templates/cms/cms_posts.html  -->
+
+<!--  继承模板文件cms/cms_base.html  简化代码 -->
+{% extends 'cms/cms_base.html' %}
+
+<!-- 页面标题 -->
+{% block title %}
+    帖子管理
+{% endblock %}
+
+{% block head %}
+    <script src="{{ url_for('static', filename='cms/js/posts.js') }}"></script>
+{% endblock %}
+
+<!--  标题  -->
+{% block page_title %}
+    {{self.title()}}
+{% endblock %}
+
+
+{% block content %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>标题</th>
+                <th>发布时间</th>
+                <th>板块</th>
+                <th>作者</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        <!--   循环渲染帖子信息，posts数据由views.py文件传输过来     -->
+        {% for post in posts  %}
+            <!--data-id="{{ post.id }}和data-highlight属性传输给posts.js文件进行判断,{{ 1 if post.highlight else 0 }}三元运算符：如果post.highlight存在显示为1    -->
+            <tr data-id="{{ post.id }}" data-highlight="{{ 1 if post.highlight else 0 }}">
+                <!--  href链接跳转到前台的帖子路由，调用该路由方法进行反转，并传输名称为post_id,value值为post.id的参数         -->
+                <td><a target="_blank" href="{{ url_for('front.post_detail',post_id=post.id) }}">{{ post.title }}</a></td>
+                <td>{{ post.create_time }}</td>
+                <!--    post.board是PostModel中的board反向查询属性，name是BoardModel中的name字段    -->
+                <td>{{ post.board.name }}</td>
+                <!--    post.author是PostModel中的author反向查询属性，username是Front_User中的username字段            -->
+                <td>{{ post.author.username }}</td>
+
+                <td>
+                    <!--   post数据由views.py文件传输过来，highlight是模型中的post的外键        -->
+                    {% if post.highlight %}
+                        <button class="btn btn-default highlight-btn">取消加精</button>
+                    {% else %}
+                        <button class="btn btn-default highlight-btn">加精</button>
+                    {% endif %}
+                    <button class="btn btn-danger btn-xs">移除</button>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
